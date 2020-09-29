@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Spring MVC - Exemplo POST</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <h1>Formulário</h1>
+            <form method="post" th:action="@{/formulario}" th:object="${dados}">
+                <div>
+                    <label>Nome</label>
+                    <input type="text" name="nome" th:field="*{nome}">
+                </div>
+                <div>
+                    <label>E-mail</label>
+                    <input type="email" name="email" th:field="*{email}">
+                </div>
+                <div>
+                    <label>Telefone</label>
+                    <input type="text" name="telefone" th:field="*{telefone}">
+                </div>
+                <div>
+                    <label>Senha</label>
+                    <input type="password" name="senha" th:field="*{senha}">
+                </div>
+                <div>
+                    <label>Repetir senha</label>
+                    <input type="password" name="repetirSenha" th:field="*{repetirSenha}">
+                </div>
+                <div>
+                    <label>Descrição</label>
+                    <textarea name="descricao" th:field="*{descricao}"></textarea>
+                </div>
+                <div>
+                    <label>Número 1 a 99</label>
+                    <input type="number" name="numero" th:field="*{numero}">
+                </div>
+                <div>
+                    <label>Altura</label>
+                    <input type="number" name="altura" th:field="*{altura}">
+                </div>
+                <div>
+                    <label>Peso</label>
+                    <input type="number" name="peso" th:field="*{peso}">
+                </div>
+                <div>
+                    <label>Data de nascimento</label>
+                    <input type="date" name="dataNascimento" th:field="*{dataNascimento}">
+                </div>
+                <div>
+                    <label>Sexo</label>
+                    <div>
+                        <input type="radio" value="0" name="sexo" th:field="*{sexo}"><label>Feminino</label>
+                    </div>
+                    <div>
+                        <input type="radio" value="1" name="sexo" th:field="*{sexo}"><label>Masculino</label>
+                    </div>
+                </div>
+                <div>
+                    <label>Interesses</label>
+                    <div>
+                        <input type="checkbox" value="Tecnologia" name="interesses" th:field="*{interesses}"><label>Tecnologia</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" value="Gastronomia" name="interesses" th:field="*{interesses}"><label>Gastronomia</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" value="Viagens" name="interesses" th:field="*{interesses}"><label>Viagens</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" value="Esportes" name="interesses" th:field="*{interesses}"><label>Esportes</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" value="Investimentos" name="interesses" th:field="*{interesses}"><label>Investimentos</label>
+                    </div>
+                </div>
+                <div>
+                    <button type="reset">Reiniciar dados</button>
+                    <button type="submit">Enviar dados</button>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

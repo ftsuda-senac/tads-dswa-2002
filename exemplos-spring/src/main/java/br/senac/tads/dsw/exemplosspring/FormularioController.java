@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,7 +47,7 @@ public class FormularioController {
     }
 
     @PostMapping
-    public ModelAndView receberDados(Formulario formulario) {
+    public ModelAndView receberDados(@ModelAttribute Formulario formulario) {
         ModelAndView mv = new ModelAndView("resultado");
         mv.addObject("dados", formulario);
         return mv;

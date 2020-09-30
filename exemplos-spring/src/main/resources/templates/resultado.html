@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>
+        <div th:if="${dados != null}">
             <h1>Dados preenchidos</h1>
             <p>Nome: <span th:text="${dados.nome}"></span></p>
             <p>E-mail: <span th:text="${dados.email}"></span></p>
@@ -30,6 +30,10 @@
                 </ul>
             </p>
             <hr>
+            <a th:href="@{/formulario}">Voltar</a>
+        </div>
+        <div th:if="${dados == null}">
+            <h3>Acesso inválido</h3>
             <a th:href="@{/formulario}">Voltar</a>
         </div>
     </body>

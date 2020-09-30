@@ -4,18 +4,35 @@
         <title>Spring MVC - Exemplo POST</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .erro {
+                color: red;
+            }
+            .input-invalido {
+                border-color: red;
+            }
+            .alert-error {
+                background-color: blanchedalmond;
+                color: red;
+            }
+        </style>
     </head>
     <body>
         <div>
             <h1>Formulário</h1>
-            <form method="post" th:action="@{/formulario}" th:object="${dados}">
+            <form method="post" th:action="@{/formulario/prg}" th:object="${dados}" novalidate>
+                <div th:if="${#fields.hasErrors('*')}" class="alert-error">
+                    Erros no preenchimento
+                </div>
                 <div>
                     <label>Nome</label>
-                    <input type="text" name="nome" th:field="*{nome}">
+                    <input type="text" name="nome" th:field="*{nome}" th:classappend="${#fields.hasErrors('nome')}? input-invalido" required maxlength="100">
+                    <div class="erro" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
                 </div>
                 <div>
                     <label>E-mail</label>
-                    <input type="email" name="email" th:field="*{email}">
+                    <input type="email" name="email" th:field="*{email}" required maxlength="100">
+                    <div class="erro" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                 </div>
                 <div>
                     <label>Telefone</label>
@@ -23,11 +40,13 @@
                 </div>
                 <div>
                     <label>Senha</label>
-                    <input type="password" name="senha" th:field="*{senha}">
+                    <input type="password" name="senha" th:field="*{senha}" required>
+                    <div class="erro" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></div>
                 </div>
                 <div>
                     <label>Repetir senha</label>
-                    <input type="password" name="repetirSenha" th:field="*{repetirSenha}">
+                    <input type="password" name="repetirSenha" th:field="*{repetirSenha}" required>
+                    <div class="erro" th:if="${#fields.hasErrors('repetirSenha')}" th:errors="*{repetirSenha}"></div>
                 </div>
                 <div>
                     <label>Descrição</label>
@@ -35,19 +54,23 @@
                 </div>
                 <div>
                     <label>Número 1 a 99</label>
-                    <input type="number" name="numero" th:field="*{numero}">
+                    <input type="number" name="numero" th:field="*{numero}" min="1" max="99">
+                    <div class="erro" th:if="${#fields.hasErrors('numero')}" th:errors="*{numero}"></div>
                 </div>
                 <div>
                     <label>Altura</label>
-                    <input type="number" name="altura" th:field="*{altura}">
+                    <input type="number" name="altura" th:field="*{altura}" min="0" max="9.99" step="0.01">
+                    <div class="erro" th:if="${#fields.hasErrors('altura')}" th:errors="*{altura}"></div>
                 </div>
                 <div>
                     <label>Peso</label>
-                    <input type="number" name="peso" th:field="*{peso}">
+                    <input type="number" name="peso" th:field="*{peso}" min="0" max="999.9" step="0.1">
+                    <div class="erro" th:if="${#fields.hasErrors('peso')}" th:errors="*{peso}"></div>
                 </div>
                 <div>
                     <label>Data de nascimento</label>
                     <input type="date" name="dataNascimento" th:field="*{dataNascimento}">
+                    <div class="erro" th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}"></div>
                 </div>
                 <div>
                     <label>Sexo</label>
@@ -75,6 +98,7 @@
                     <div>
                         <input type="checkbox" value="Investimentos" name="interesses" th:field="*{interesses}"><label>Investimentos</label>
                     </div>
+                    <div class="erro" th:if="${#fields.hasErrors('interesses')}" th:errors="*{interesses}"></div>
                 </div>
                 <div>
                     <button type="reset">Reiniciar dados</button>

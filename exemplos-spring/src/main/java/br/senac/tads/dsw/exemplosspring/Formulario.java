@@ -7,36 +7,56 @@ package br.senac.tads.dsw.exemplosspring;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
 public class Formulario {
     
     private Long id;
-    
+
+    @NotEmpty
+    @Size(max = 100)
     private String nome;
-    
+
+    @NotEmpty
+    @Size(max = 100)
+    @Email
     private String email;
     
     private String telefone;
     
+    @NotEmpty
     private String senha;
-    
+   
+    @NotEmpty
     private String repetirSenha;
     
     private String descricao;
-    
+   
+    @Min(1)
+    @Max(99)
     private int numero;
-    
+
+    @Digits(integer = 1, fraction = 2)
     private BigDecimal altura;
-    
+
+    @Digits(integer = 3, fraction = 1)
     private BigDecimal peso;
 
+    @PastOrPresent
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // ISO-8601
     private LocalDate dataNascimento;
     
     private int sexo;
-    
+
+    @NotEmpty
     private String[] interesses;
 
     public Long getId() {

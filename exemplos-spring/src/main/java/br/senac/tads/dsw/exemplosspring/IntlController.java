@@ -29,6 +29,11 @@ public class IntlController {
     public ModelAndView comI18n(@RequestHeader("Accept-Language") String acceptLanguage) {
         return new ModelAndView("/intl/com-i18n").addObject("acceptLanguage", acceptLanguage);
     }
+   
+    @GetMapping("/com-interceptor")
+    public ModelAndView comI18nInterceptor() {
+        return new ModelAndView("/intl/com-i18n-interceptor");
+    }
 
     @GetMapping("/form")
     public ModelAndView mostrarForm() {

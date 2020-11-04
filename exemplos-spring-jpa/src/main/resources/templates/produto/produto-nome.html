@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <h1>Resultado busca por Nome</h1>
+            <h2>Nome digitado: <span th:text="${param.nome}"></span></p>
+            <ul th:each="prod : ${resultados}">
+                <li><b th:text="${prod.id}"></b> - <span th:text="${prod.nome}"></span></li>
+            </ul>
+        </div>
+    </body>
+</html>

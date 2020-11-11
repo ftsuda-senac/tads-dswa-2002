@@ -5,16 +5,24 @@
  */
 package br.senac.tads.dsw.exemplospringsecurity;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 /**
  *
  * @author fernando.tsuda
  */
-//@Configuration
-//@EnableWebSecurity
-public class SecurityConfig /*extends WebSecurityConfigurerAdapter*/{
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-/*
     public static PasswordEncoder plainPasswordEncoder() {
+
         return new PasswordEncoder() {
             @Override
             public String encode(CharSequence cs) {
@@ -34,7 +42,33 @@ public class SecurityConfig /*extends WebSecurityConfigurerAdapter*/{
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return plainPasswordEncoder();
+        return bcryptPasswordEncoder();
     }
-*/
+    
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeRequests()
+                    .antMatchers("/css/**", "/img/**", "/js/**", "/font/**", "/", "/index.html", "/h2/**").permitAll()
+                    .antMatchers("/protegido/peao/**").hasRole("PEAO") // OU .hasAuthority("ROLE_PEAO")
+                    .antMatchers("/protegido/fodon/**").hasRole("FODON")
+                    .antMatchers("/protegido/god/**").hasRole("GOD")
+                    //.antMatchers("/home").hasAnyAuthority("ROLE_PEAO", "ROLE_FODON", "ROLE_GOD")
+                    .anyRequest().authenticated()
+                .and()
+                    .formLogin()
+                        .loginPage("/login")
+                        .usernameParameter("username")
+                        .passwordParameter("senha")
+                        .defaultSuccessUrl("/home").permitAll()
+                .and()
+                    .logout()
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                .and()
+                    .exceptionHandling()
+                        .accessDeniedPage("/erro/403");
+                
+    }
 }

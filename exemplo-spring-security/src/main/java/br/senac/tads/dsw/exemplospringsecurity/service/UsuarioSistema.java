@@ -1,13 +1,16 @@
 package br.senac.tads.dsw.exemplospringsecurity.service;
 
+import br.senac.tads.dsw.exemplospringsecurity.SecurityConfig;
+import java.util.Collection;
 import java.util.List;
-
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *
  * @author fernando.tsuda
  */
-public class UsuarioSistema {
+public class UsuarioSistema implements UserDetails {
 
     private String username;
 
@@ -29,9 +32,10 @@ public class UsuarioSistema {
     }
 
     public final void setSenha(String senhaAberta) {
-        this.hashSenha = senhaAberta;
+        this.hashSenha = SecurityConfig.bcryptPasswordEncoder().encode(senhaAberta);
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -62,6 +66,37 @@ public class UsuarioSistema {
 
     public void setPapeis(List<Papel> papeis) {
         this.papeis = papeis;
+    }
+
+    @Override
+    //public Collection<? extends GrantedAuthority> getAuthorities() {
+    public List<Papel> getAuthorities() {
+        return papeis;
+    }
+
+    @Override
+    public String getPassword() {
+        return hashSenha;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
 }

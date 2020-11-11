@@ -5,6 +5,8 @@
  */
 package br.senac.tads.dsw.exemplospringsecurity;
 
+import br.senac.tads.dsw.exemplospringsecurity.controller.PostLoginHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 /**
  *
@@ -44,6 +47,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return bcryptPasswordEncoder();
     }
+
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new PostLoginHandler();
+    }
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -53,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/protegido/peao/**").hasRole("PEAO") // OU .hasAuthority("ROLE_PEAO")
                     .antMatchers("/protegido/fodon/**").hasRole("FODON")
                     .antMatchers("/protegido/god/**").hasRole("GOD")
+                    .antMatchers("/login2").permitAll()
                     //.antMatchers("/home").hasAnyAuthority("ROLE_PEAO", "ROLE_FODON", "ROLE_GOD")
                     .anyRequest().authenticated()
                 .and()
@@ -60,12 +69,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .loginPage("/login")
                         .usernameParameter("username")
                         .passwordParameter("senha")
+                        .successHandler(authenticationSuccessHandler())
                         .defaultSuccessUrl("/home").permitAll()
+                /*
                 .and()
                     .logout()
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .invalidateHttpSession(true)
+*/
                 .and()
                     .exceptionHandling()
                         .accessDeniedPage("/erro/403");

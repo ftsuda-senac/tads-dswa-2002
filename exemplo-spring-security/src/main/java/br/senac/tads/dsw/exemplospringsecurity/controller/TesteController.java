@@ -11,20 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
- * @author fernando.tsuda
+ * @author fedts
  */
-
 @Controller
-public class LoginController {
-
-    @GetMapping("/login")
-    public String mostrarFormLogin() {
-        return "login";
-    }
-
-    @GetMapping("/login2")
-    public String mostrarLogin2() {
-        return "login2";
+@RequestMapping("/teste")
+public class TesteController {
+    
+    @GetMapping
+    public String mostrarTeste() {
+        return "teste";
     }
     
 }
